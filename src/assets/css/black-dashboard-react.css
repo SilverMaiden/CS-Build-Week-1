@@ -72,6 +72,11 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   display: block; }
 
 
+.grid-container {
+  display: flex;
+  align-items: center;
+  border: solid pink 2px;
+}
 
 body {
   margin: 0;

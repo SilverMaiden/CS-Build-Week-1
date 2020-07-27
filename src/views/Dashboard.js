@@ -33,11 +33,19 @@ import {
 
 // core components
 
+import Cell from "../components/Cells/Cell"
+
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: [1,2,3,4,5,6,7,8,9,101,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+      list: [['x', 'x', 'x', 'x', 'x'],
+      ['x', 'x', 'x', 'x', 'x'],
+      ['x', 'x', 'x', 'x', 'x'],
+      ['x', 'x', 'x', 'x', 'x'],
+      ['x', 'x', 'x', 'x', 'x']
+    ],
+    defaultGridSize: 25,
     };
   }
   setList = name => {
@@ -45,7 +53,29 @@ class Dashboard extends React.Component {
       list: name,  
     });
   };
+  /* Function to generate x by x grid based on input */
+  generateGrid = (input) => {
+    let newList = []
+    let count1 = 0
+    let count2 = 0
+    while(count1 < input) {
+      count2 = 0
+      let row = []
+      while(count2 < input) {
+        row.push('x');
+        count2 += 1
+      }
+      newList.push(row)
+      count1 += 1
+    }
+    this.setState({
+      list: newList
+    })
+  }
 
+  componentDidMount = () => {
+    this.generateGrid(this.state.defaultGridSize)
+  }
   render() {
     return (
       <>
@@ -142,19 +172,17 @@ class Dashboard extends React.Component {
 
 
 
-          <Row style={{ display: "flex", justifyContent: "space-between"}}>
-            {this.state.list.map(() =>
-              <div style={{width: '1.5rem', marginLeft: "0.5rem", marginRight: "0.5rem"}}>
-              <Card className="card-chart custom-card-layout" 
-                style={{width: "2rem", border: "white dotted 1px"}} 
-                onClick={() => console.log("hi")}>
-                
-                <CardBody>
-                </CardBody>
-              </Card>
-            </div>
-            )}
-          </Row>
+          <div className="grid-container" style={{display: "flex", flexFlow: "column", alignItems: "center"}}>
+            {this.state.list.map((row) => {
+            return <Row style={{ display: "flex", justifyContent: "center", width: "auto", height: "1rem"}}>
+            {row.map((value) => (
+              <Cell value={value} />
+            ))}
+            <br />
+            </Row>
+            })}
+          </div>
+
         </div>
       </>
     );

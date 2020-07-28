@@ -18,7 +18,7 @@
 import React from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
-
+import equal from 'fast-deep-equal'
 // reactstrap components
 import {
   Card,
@@ -27,27 +27,80 @@ import {
 
 // core components
 
+const ALIVE_KEY = 'o';
+const DEAD_KEY = 'x';
+
+const blue = {
+    width: "1rem", background: "linear-gradient(#1d8cf8, #3358f4)", height: "1rem", border: "black solid 1px",
+  }
+
+const green = {
+    width: "1rem", background: "linear-gradient(#00f2c3, #0098f0)", height: "1rem", border: "black solid 1px",
+}
+
+const dead = {
+    width: "1rem", height: "1rem", border: "black solid 1px",
+
+}
+
+const pink = {
+    width: "1rem", background: "linear-gradient(#e14eca, #ba54f5)", height: "1rem", border: "black solid 1px",
+
+}
+
+
 class Cell extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        alive: false
-    };
-  }
+        bgStyle: blue
+    }
+    this.chooseColour = this.chooseColour.bind(this);
+
+}
+    chooseColour = () => {
+        if(this.props.bgColourClass === "blue") {
+            this.setState({bgStyle: blue})
+        } else if (this.props.bgColourClass === "green") {
+            this.setState({bgStyle: green})
+        } else if (this.props.bgColourClass === "primary") {
+            this.setState({bgStyle: pink})
+        }
+    }
+
+    componentDidMount = () => {
+        this.chooseColour()
+    }
+
+    componentDidUpdate = (prevProps) => {
+        if(this.props.bgColourClass !== prevProps.bgColourClass) {
+            return this.chooseColour()
+        }
+    }
+
+      filledOrNot = () => {
+          if (this.props.value === ALIVE_KEY) {
+              return (
+                <Card
+                style={this.state.bgStyle}
+                >                
+              </Card>
+              )
+          } else if (this.props.value === DEAD_KEY) {
+              return (
+                <Card style={dead}
+                >
+              </Card>
+              )
+          }
+      }
+
 
 
   render() {
-    return (
-            <div style={{width: '0.5rem', marginLeft: "0.25rem", marginRight: "0.25rem"}}>
-              <Card className="card-chart custom-card-layout" 
-                style={{width: "1rem", height: "1rem", border: "black solid 1px"}} 
-                onClick={() => console.log("hi")}>
-                
-                <CardBody>
-                </CardBody>
-              </Card>
-            </div>
-        )
+    return  this.filledOrNot()
+          
+
     }
 }
 

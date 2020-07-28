@@ -25,6 +25,7 @@ import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
+import Dashboard from "../../views/Dashboard";
 
 import routes from "routes.js";
 
@@ -85,6 +86,7 @@ class Admin extends React.Component {
             path={prop.layout + prop.path}
             component={prop.component}
             key={key}
+            state={this.state.backgroundColor}
           />
         );
       } else {
@@ -127,16 +129,7 @@ class Admin extends React.Component {
             ref="mainPanel"
             data={this.state.backgroundColor}
           >
-            <AdminNavbar
-              {...this.props}
-              brandText={this.getBrandText(this.props.location.pathname)}
-              toggleSidebar={this.toggleSidebar}
-              sidebarOpened={this.state.sidebarOpened}
-            />
-            <Switch>
-              {this.getRoutes(routes)}
-              <Redirect from="*" to="/admin/dashboard"/>
-            </Switch>
+          <Dashboard bgColor={this.state.backgroundColor}/>
             {// we don't want the Footer to be rendered on map page
             this.props.location.pathname.indexOf("maps") !== -1 ? null : (
               <Footer fluid />

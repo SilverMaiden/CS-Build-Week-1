@@ -71,13 +71,6 @@ html {
 article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   display: block; }
 
-
-.grid-container {
-  display: flex;
-  align-items: center;
-  border: solid pink 2px;
-}
-
 body {
   margin: 0;
   font-family: "Poppins", sans-serif;
@@ -12535,5 +12528,3 @@ textarea.form-control {
 
 select.form-control option {
   color: #888; }
-
-/*# sourceMappingURL=black-dashboard-react.css.map */

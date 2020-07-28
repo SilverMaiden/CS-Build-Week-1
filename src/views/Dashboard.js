@@ -35,6 +35,9 @@ import {
 
 import Cell from "../components/Cells/Cell"
 
+const ALIVE_KEY = 'o';
+const DEAD_KEY = 'x';
+
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
@@ -45,14 +48,29 @@ class Dashboard extends React.Component {
       ['x', 'x', 'x', 'x', 'x'],
       ['x', 'x', 'x', 'x', 'x']
     ],
-    defaultGridSize: 25,
+    defaultGridSize: 5,
+    active: false,
+    cellColourClass: this.props.bgColor
     };
   }
-  setList = name => {
-    this.setState({
-      list: name,  
-    });
-  };
+
+
+  cellClickHandler = (value, xVal, yVal) => {
+    if (!this.state.active) {
+        let newGrid = this.state.list;
+        if (value === ALIVE_KEY) {
+            newGrid[xVal][yVal] = DEAD_KEY
+        } else if (value === DEAD_KEY) {
+            newGrid[xVal][yVal] = ALIVE_KEY
+        }
+        console.log(newGrid)
+        this.setState({list: newGrid}) 
+        console.log("hi")
+    }
+  }
+
+
+
   /* Function to generate x by x grid based on input */
   generateGrid = (input) => {
     let newList = []
@@ -62,7 +80,7 @@ class Dashboard extends React.Component {
       count2 = 0
       let row = []
       while(count2 < input) {
-        row.push('x');
+        row.push(DEAD_KEY);
         count2 += 1
       }
       newList.push(row)
@@ -75,7 +93,15 @@ class Dashboard extends React.Component {
 
   componentDidMount = () => {
     this.generateGrid(this.state.defaultGridSize)
+    console.log(this.props.bgColor)
   }
+
+  componentDidUpdate = () => {
+    console.log(this.props.bgColor)
+    
+  }
+
+
   render() {
     return (
       <>
@@ -173,10 +199,20 @@ class Dashboard extends React.Component {
 
 
           <div className="grid-container" style={{display: "flex", flexFlow: "column", alignItems: "center"}}>
-            {this.state.list.map((row) => {
+            {this.state.list.map((row, xVal) => {
             return <Row style={{ display: "flex", justifyContent: "center", width: "auto", height: "1rem"}}>
-            {row.map((value) => (
-              <Cell value={value} />
+            {row.map((value, yVal) => (
+              <div onClick={() => this.cellClickHandler(value, xVal, yVal)}>
+              <Cell 
+                key={xVal + yVal}
+                bgColourClass={this.props.bgColor}
+                value={value} 
+                xVal={xVal} 
+                yVal={yVal} 
+                active={this.state.active} 
+                grid={this.state.list} 
+                onClick={() => this.cellClickHandler(value, xVal, yVal)}/>
+                </div>
             ))}
             <br />
             </Row>

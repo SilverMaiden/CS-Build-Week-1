@@ -30,14 +30,14 @@ var routes = [
     icon: "tim-icons icon-controller",
     component: Dashboard,
     layout: "/admin"
-  },
+  },/*, To use when adding more components to sidebar later.
   {
     path: "/settings",
     name: "Settings",
     icon: "tim-icons icon-settings-gear-63",
     component: Icons,
     layout: "/admin"
-  },/*, To use when adding more components to sidebar later.
+  }
   {
     path: "/typography",
     name: "Typography",

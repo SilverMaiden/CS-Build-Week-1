@@ -34,16 +34,44 @@ import {
 // core components
 
 import Grid from "../components/Grid/Grid"
+const ALIVE_KEY = 'o';
+const DEAD_KEY = 'x';
+const GRID_SIZE = 25
 
 
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: false
+      active: false,
+      defaultGridSize: 25,
+      grid: []
     }
   }
 
+    /* Function to generate x by x grid based on input */
+    generateGrid = (input) => {
+      let newGrid = []
+      let count1 = 0
+      let count2 = 0
+      while(count1 < input) {
+        count2 = 0
+        let row = []
+        while(count2 < input) {
+          row.push(DEAD_KEY);
+          count2 += 1
+        }
+        newGrid.push(row)
+        count1 += 1
+      }
+      this.setState({
+        grid: newGrid
+      })
+    }
+
+    componentWillMount = () => {
+      this.generateGrid(this.state.defaultGridSize)
+    }
   handleStartClick = () => {
     this.setState({active: true})
     console.log("Should be started")
@@ -141,6 +169,7 @@ class Dashboard extends React.Component {
             bgColor={this.props.bgColor}
             active={this.state.active}
             setActive={this.setActive}
+            grid={this.state.grid}
             />
 
 

@@ -32,7 +32,7 @@ class Grid extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: [],
+      grid: this.props.grid,
       defaultGridSize: GRID_SIZE,
         toChangePositions: [],
         };
@@ -42,7 +42,7 @@ class Grid extends React.Component {
     let count1 = 0;
     let count2 = 0;
     let markedPositions = [];
-    let grid = this.state.list
+    let grid = this.state.grid
     for(var i = 0; i < (grid.length); i++) {
       for(var j = 0; j < (grid[i].length); j++) {
 
@@ -123,7 +123,7 @@ class Grid extends React.Component {
   }
 
     makeCellValueSwaps = (markedPositions) => {
-    let grid = this.state.list;
+    let grid = this.state.grid;
     markedPositions.forEach(position => {
       // Swap value in grid
       let first = position[1];
@@ -145,45 +145,24 @@ class Grid extends React.Component {
       console.log(markedPositions)
       let newGrid = this.makeCellValueSwaps(markedPositions)
       console.log(newGrid)
-      this.setState({list: newGrid})
+      this.setState({grid: newGrid})
     }
   }
 
   cellClickHandler = (value, xVal, yVal) => {
-    if (!this.state.active) {
-        let newGrid = this.state.list;
+    if (!this.props.active) {
+        let newGrid = this.state.grid;
         if (value === ALIVE_KEY) {
             newGrid[xVal][yVal] = DEAD_KEY
         } else if (value === DEAD_KEY) {
             newGrid[xVal][yVal] = ALIVE_KEY
         }
-        this.setState({list: newGrid}) 
+        this.setState({grid: newGrid}) 
     }
   }
 
-
-  /* Function to generate x by x grid based on input */
-  generateGrid = (input) => {
-    let newList = []
-    let count1 = 0
-    let count2 = 0
-    while(count1 < input) {
-      count2 = 0
-      let row = []
-      while(count2 < input) {
-        row.push(DEAD_KEY);
-        count2 += 1
-      }
-      newList.push(row)
-      count1 += 1
-    }
-    this.setState({
-      list: newList
-    })
-  }
 
   componentWillMount = () => {
-    this.generateGrid(this.state.defaultGridSize)
     console.log(this.props.bgColor)
   }
   componentWillUnmount() {
@@ -203,7 +182,7 @@ class Grid extends React.Component {
     return (
           <div className="grid-container" style={{display: "flex", flexFlow: "column", alignItems: "center"}}>
               {this.startGridChanges()}
-            {this.state.list.map((row, xVal) => {
+            {this.state.grid.map((row, xVal) => {
             return <Row style={{ display: "flex", justifyContent: "center", width: "auto", height: "1rem"}}>
             {row.map((value, yVal) => (
               <div onClick={() => this.cellClickHandler(value, xVal, yVal)}>
@@ -215,9 +194,9 @@ class Grid extends React.Component {
                 yVal={yVal} 
                 setActive={this.props.setActive}
                 parentIsMounted={this._isMounted}
-                grid={this.state.list} 
+                grid={this.state.grid} 
                 onClick={() => {
-                  if(!this.props.active) { 
+                  if(this.props.active) { 
                     this.cellClickHandler(value, xVal, yVal)}
                   }
                   }/>

@@ -74,6 +74,8 @@ class Cell extends React.Component {
 
     componentDidUpdate = (prevProps) => {
         if(this.props.bgColourClass !== prevProps.bgColourClass) {
+            // Sets active to false if colour is changed.
+            this.props.setActive(false)
             return this.chooseColour()
         }
     }

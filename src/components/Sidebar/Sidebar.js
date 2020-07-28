@@ -14,6 +14,13 @@
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
+              <ReactstrapNavLink
+                href="https://www.creative-tim.com/product/black-dashboard-pro-react?ref=bdr-user-archive-sidebar-upgrade-pro"
+              >
+                <i className="tim-icons icon-spaceship" />
+                <p>Upgrade to PRO</p>
+              </ReactstrapNavLink>
+
 */
 /*eslint-disable*/
 import React from "react";
@@ -132,7 +139,7 @@ class Sidebar extends React.Component {
                     onClick={this.props.toggleSidebar}
                   >
                     <i className={prop.icon} />
-                    <p>{rtlActive ? prop.rtlName : prop.name}</p>
+                    <p>{prop.name}</p>
                   </NavLink>
                 </li>
               );
@@ -140,12 +147,6 @@ class Sidebar extends React.Component {
             <li
               className="active-pro"
             >
-              <ReactstrapNavLink
-                href="https://www.creative-tim.com/product/black-dashboard-pro-react?ref=bdr-user-archive-sidebar-upgrade-pro"
-              >
-                <i className="tim-icons icon-spaceship" />
-                <p>Upgrade to PRO</p>
-              </ReactstrapNavLink>
             </li>
           </Nav>
         </div>

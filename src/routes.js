@@ -26,23 +26,23 @@ import UserProfile from "views/UserProfile.js";
 var routes = [
   {
     path: "/dashboard",
-    name: "Dashboard",
-    icon: "tim-icons icon-chart-pie-36",
+    name: "Game",
+    icon: "tim-icons icon-controller",
     component: Dashboard,
     layout: "/admin"
   },
   {
-    path: "/icons",
-    name: "Icons",
-    icon: "tim-icons icon-atom",
+    path: "/settings",
+    name: "Settings",
+    icon: "tim-icons icon-settings-gear-63",
     component: Icons,
     layout: "/admin"
-  },
+  },/*, To use when adding more components to sidebar later.
   {
     path: "/typography",
     name: "Typography",
     icon: "tim-icons icon-align-center",
     component: Typography,
     layout: "/admin"
-  }];
+  }*/];
 export default routes;

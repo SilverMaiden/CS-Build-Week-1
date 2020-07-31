@@ -32,11 +32,36 @@ class Grid extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      grid: this.props.grid,
+      grid: [],
       defaultGridSize: GRID_SIZE,
-        toChangePositions: [],
-        };
+      toChangePositions: [],
+      defaultGrid: []    
     }
+    }
+
+
+  /* Function to generate x by x grid based on input */
+  generateGrid = (input) => {
+  let newGrid = []
+      let count1 = 0
+      let count2 = 0
+      while(count1 < input) {
+        count2 = 0
+        let row = []
+        while(count2 < input) {
+          row.push(DEAD_KEY);
+          count2 += 1
+        }
+        newGrid.push(row)
+        count1 += 1
+      }
+      return newGrid
+    }
+
+
+
+
+
 
   markCellPositionsToChange = () => {
     let markedPositions = [];
@@ -120,7 +145,7 @@ class Grid extends React.Component {
     return markedPositions;
   }
 
-    makeCellValueSwaps = (markedPositions) => {
+  makeCellValueSwaps = (markedPositions) => {
     let grid = this.state.grid;
     markedPositions.forEach(position => {
       // Swap value in grid
@@ -144,7 +169,13 @@ class Grid extends React.Component {
       let newGrid = this.makeCellValueSwaps(markedPositions)
       console.log(newGrid)
       this.setState({grid: newGrid})
+    } else if(this.props.reset){
+      let newGrid = this.generateGrid(this.props.defaultGridSize)
+      this.props.setActive(false)
+      this.props.setReset(false)
+      this.setState({grid: newGrid})
     }
+
   }
 
   cellClickHandler = (value, xVal, yVal) => {
@@ -159,18 +190,19 @@ class Grid extends React.Component {
     }
   }
 
-
   componentWillMount = () => {
-    console.log(this.props.bgColor)
+    let newGrid = this.generateGrid(this.props.defaultGridSize)
+    this.setState({grid: newGrid, defaultGrid: newGrid })
   }
   componentWillUnmount() {
     this._isMounted = false;
   }
 
-
   startGridChanges = () => {
     if(this.props.active) {
       setTimeout(this.makeGridStateChange, 500)
+    } else if(this.props.reset) {
+      setTimeout(this.makeGridStateChange, 10)
     }
   }
 
@@ -191,8 +223,11 @@ class Grid extends React.Component {
                 xVal={xVal} 
                 yVal={yVal} 
                 setActive={this.props.setActive}
+                reset={this.props.reset}
+                setReset={this.props.setReset}
                 parentIsMounted={this._isMounted}
-                grid={this.state.grid} 
+                grid={this.state.grid}
+                defaultGrid={this.state.defaultGridSize}
                 onClick={() => {
                   if(this.props.active) { 
                     this.cellClickHandler(value, xVal, yVal)}

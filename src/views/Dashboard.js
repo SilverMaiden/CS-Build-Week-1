@@ -21,6 +21,8 @@ import classNames from "classnames";
 
 // reactstrap components
 import {
+  Form,
+  FormGroup,
   Button,
   ButtonGroup,
   Card,
@@ -29,6 +31,8 @@ import {
   CardTitle,
   Row,
   Col,
+  Input,
+  UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem
 } from "reactstrap";
 
 // core components
@@ -45,33 +49,10 @@ class Dashboard extends React.Component {
     this.state = {
       active: false,
       defaultGridSize: GRID_SIZE,
-      grid: []
+      reset: false
     }
   }
 
-    /* Function to generate x by x grid based on input */
-    generateGrid = (input) => {
-      let newGrid = []
-      let count1 = 0
-      let count2 = 0
-      while(count1 < input) {
-        count2 = 0
-        let row = []
-        while(count2 < input) {
-          row.push(DEAD_KEY);
-          count2 += 1
-        }
-        newGrid.push(row)
-        count1 += 1
-      }
-      this.setState({
-        grid: newGrid
-      })
-    }
-
-    componentWillMount = () => {
-      this.generateGrid(this.state.defaultGridSize)
-    }
   handleStartClick = () => {
     this.setState({active: true})
     console.log("Should be started")
@@ -80,8 +61,23 @@ class Dashboard extends React.Component {
     this.setState({active: false})
     console.log("Should be stopped")
   }
+
+  handleClearClick = () => {
+    if (!this.state.active) {
+      this.setState({reset: !this.state.reset})
+    }
+  }
+
+  handleGridSize = (input) => {
+    this.setState({defaultGridSize: input, reset: true})
+  }
+
+
   setActive = (input) => {
     this.setState({active: input})
+  }
+  setReset = (input) => {
+    this.setState({reset: input})
   }
 
   render() {
@@ -145,6 +141,8 @@ class Dashboard extends React.Component {
                           id="2"
                           size="sm"
                           className={classNames("btn-simple")}
+                          onClick={this.handleClearClick
+                          }
                         >
                           <input
                             className="d-none"
@@ -163,13 +161,25 @@ class Dashboard extends React.Component {
                   </Row>
                 </CardHeader>
               </Card>
+              <UncontrolledDropdown group>
+                      <DropdownToggle caret color="info" data-toggle="dropdown">
+                          Choose Grid Size
+                      </DropdownToggle>
+                      <DropdownMenu>
+                          <DropdownItem onClick={() => this.handleGridSize(25)}>25 x 25</DropdownItem>
+                          <DropdownItem onClick={() => this.handleGridSize(30)}>30 x 30</DropdownItem>
+                          <DropdownItem onClick={() => this.handleGridSize(45)}>45 x 45</DropdownItem>
+                      </DropdownMenu>
+                  </UncontrolledDropdown>
             </Col>
           </Row>
           <Grid 
             bgColor={this.props.bgColor}
             active={this.state.active}
+            reset={this.state.reset}
             setActive={this.setActive}
-            grid={this.state.grid}
+            setReset={this.setReset}
+            defaultGridSize={this.state.defaultGridSize}
             />
 
 

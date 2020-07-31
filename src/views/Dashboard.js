@@ -49,7 +49,8 @@ class Dashboard extends React.Component {
     this.state = {
       active: false,
       defaultGridSize: GRID_SIZE,
-      reset: false
+      reset: false,
+      currentGeneration: 1
     }
   }
 
@@ -78,6 +79,15 @@ class Dashboard extends React.Component {
   }
   setReset = (input) => {
     this.setState({reset: input})
+  }
+  updateCurrentGeneration = () => {
+    this.setState({currentGeneration: this.state.currentGeneration + 1})
+  }
+
+  resetGeneration = () => {
+    this.setState({currentGeneration: 1})
+    this.setActive(false)
+    this.setReset(false)
   }
 
   render() {
@@ -161,6 +171,7 @@ class Dashboard extends React.Component {
                   </Row>
                 </CardHeader>
               </Card>
+              <Col>
               <UncontrolledDropdown group>
                       <DropdownToggle caret color="info" data-toggle="dropdown">
                           Choose Grid Size
@@ -171,7 +182,15 @@ class Dashboard extends React.Component {
                           <DropdownItem onClick={() => this.handleGridSize(45)}>45 x 45</DropdownItem>
                       </DropdownMenu>
                   </UncontrolledDropdown>
-            </Col>
+                  </Col>
+                  <Col>
+                  <span>
+                    Current Generation: {this.state.currentGeneration}
+                  </span>
+                  </Col>
+
+                  </Col>
+                  
           </Row>
           <Grid 
             bgColor={this.props.bgColor}
@@ -180,7 +199,34 @@ class Dashboard extends React.Component {
             setActive={this.setActive}
             setReset={this.setReset}
             defaultGridSize={this.state.defaultGridSize}
+            currentGeneration={this.state.currentGeneration}
+            updateCurrentGeneration={this.updateCurrentGeneration}
+            resetGeneration={this.resetGeneration}
             />
+
+<Col>
+            <UncontrolledDropdown group>
+                      <DropdownToggle caret color="info" data-toggle="dropdown">
+                          Choose Speed
+                      </DropdownToggle>
+                      <DropdownMenu>
+                          <DropdownItem onClick={() => this.handleGridSize(25)}> x 2</DropdownItem>
+                          <DropdownItem onClick={() => this.handleGridSize(30)}> x 4</DropdownItem>
+                          <DropdownItem onClick={() => this.handleGridSize(45)}> x 6</DropdownItem>
+                      </DropdownMenu>
+                  </UncontrolledDropdown>
+                  <br />
+                  </Col>
+            <Col>
+                  <span>
+                    Rules: 
+                    <p>
+                    Any live cell with fewer than two live neighbours dies, as if by underpopulation.</p>
+<p>Any live cell with two or three live neighbours lives on to the next generation.</p>
+<p>Any live cell with more than three live neighbours dies, as if by overpopulation.</p>
+<p>Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.</p>
+                  </span>
+                  </Col>
 
 
         </div>

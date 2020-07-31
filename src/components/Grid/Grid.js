@@ -35,7 +35,7 @@ class Grid extends React.Component {
       grid: [],
       defaultGridSize: GRID_SIZE,
       toChangePositions: [],
-      defaultGrid: []    
+      defaultGrid: [],
     }
     }
 
@@ -165,14 +165,13 @@ class Grid extends React.Component {
   makeGridStateChange = () => {
     if(this.props.active) {
       let markedPositions = this.markCellPositionsToChange()
-      console.log(markedPositions)
       let newGrid = this.makeCellValueSwaps(markedPositions)
-      console.log(newGrid)
-      this.setState({grid: newGrid})
+      this.setState({grid: newGrid}, this.props.updateCurrentGeneration())
+      
+
     } else if(this.props.reset){
       let newGrid = this.generateGrid(this.props.defaultGridSize)
-      this.props.setActive(false)
-      this.props.setReset(false)
+      this.props.resetGeneration()
       this.setState({grid: newGrid})
     }
 
@@ -198,11 +197,12 @@ class Grid extends React.Component {
     this._isMounted = false;
   }
 
+
   startGridChanges = () => {
     if(this.props.active) {
-      setTimeout(this.makeGridStateChange, 500)
+      setTimeout(this.makeGridStateChange, 200)
     } else if(this.props.reset) {
-      setTimeout(this.makeGridStateChange, 10)
+      setTimeout(this.makeGridStateChange, 100)
     }
   }
 

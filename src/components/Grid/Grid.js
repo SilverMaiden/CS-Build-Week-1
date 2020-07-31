@@ -26,7 +26,7 @@ import Cell from "../Cells/Cell"
 
 const ALIVE_KEY = 'o';
 const DEAD_KEY = 'x';
-const GRID_SIZE = 25
+const GRID_SIZE = 8
 
 class Grid extends React.Component {
   constructor(props) {
@@ -39,8 +39,6 @@ class Grid extends React.Component {
     }
 
   markCellPositionsToChange = () => {
-    let count1 = 0;
-    let count2 = 0;
     let markedPositions = [];
     let grid = this.state.grid
     for(var i = 0; i < (grid.length); i++) {
@@ -172,7 +170,7 @@ class Grid extends React.Component {
 
   startGridChanges = () => {
     if(this.props.active) {
-      setTimeout(this.makeGridStateChange, 1000)
+      setTimeout(this.makeGridStateChange, 500)
     }
   }
 

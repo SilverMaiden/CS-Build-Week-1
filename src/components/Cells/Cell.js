@@ -31,20 +31,20 @@ const ALIVE_KEY = 'o';
 const DEAD_KEY = 'x';
 
 const blue = {
-    width: "1rem", background: "linear-gradient(#1d8cf8, #3358f4)", height: "1rem", border: "black solid 1px",
+    width: "1rem", background: "linear-gradient(#1d8cf8, #3358f4)", height: "1rem",
   }
 
 const green = {
-    width: "1rem", background: "linear-gradient(#00f2c3, #0098f0)", height: "1rem", border: "black solid 1px",
+    width: "1rem", background: "linear-gradient(#00f2c3, #0098f0)", height: "1rem",
 }
 
 const dead = {
-    width: "1rem", height: "1rem", border: "black solid 1px",
+    width: "1rem", height: "1rem", border: "slategrey dotted 0.25px",
 
 }
 
 const pink = {
-    width: "1rem", background: "linear-gradient(#e14eca, #ba54f5)", height: "1rem", border: "black solid 1px",
+    width: "1rem", background: "linear-gradient(#e14eca, #ba54f5)", height: "1rem",
 
 }
 

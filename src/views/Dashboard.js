@@ -36,7 +36,7 @@ import {
 import Grid from "../components/Grid/Grid"
 const ALIVE_KEY = 'o';
 const DEAD_KEY = 'x';
-const GRID_SIZE = 25
+const GRID_SIZE = 8
 
 
 class Dashboard extends React.Component {
@@ -44,7 +44,7 @@ class Dashboard extends React.Component {
     super(props);
     this.state = {
       active: false,
-      defaultGridSize: 25,
+      defaultGridSize: GRID_SIZE,
       grid: []
     }
   }

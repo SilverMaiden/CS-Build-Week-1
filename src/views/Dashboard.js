@@ -41,6 +41,7 @@ import Grid from "../components/Grid/Grid"
 const ALIVE_KEY = 'o';
 const DEAD_KEY = 'x';
 const GRID_SIZE = 8
+const SPEED = 1000
 
 
 class Dashboard extends React.Component {
@@ -49,6 +50,7 @@ class Dashboard extends React.Component {
     this.state = {
       active: false,
       defaultGridSize: GRID_SIZE,
+      defaultSpeed: SPEED,
       reset: false,
       currentGeneration: 1
     }
@@ -79,6 +81,9 @@ class Dashboard extends React.Component {
   }
   setReset = (input) => {
     this.setState({reset: input})
+  }
+  setSpeed = (input) => {
+    this.setState({defaultSpeed: input})
   }
   updateCurrentGeneration = () => {
     this.setState({currentGeneration: this.state.currentGeneration + 1})
@@ -202,6 +207,8 @@ class Dashboard extends React.Component {
             currentGeneration={this.state.currentGeneration}
             updateCurrentGeneration={this.updateCurrentGeneration}
             resetGeneration={this.resetGeneration}
+            setSpeed={this.setSpeed}
+            speed={this.state.defaultSpeed}
             />
 
 <Col>
@@ -210,9 +217,9 @@ class Dashboard extends React.Component {
                           Choose Speed
                       </DropdownToggle>
                       <DropdownMenu>
-                          <DropdownItem onClick={() => this.handleGridSize(25)}> x 2</DropdownItem>
-                          <DropdownItem onClick={() => this.handleGridSize(30)}> x 4</DropdownItem>
-                          <DropdownItem onClick={() => this.handleGridSize(45)}> x 6</DropdownItem>
+                          <DropdownItem onClick={() => this.setSpeed(500)}> x 2</DropdownItem>
+                          <DropdownItem onClick={() => this.setSpeed(250)}> x 4</DropdownItem>
+                          <DropdownItem onClick={() => this.setSpeed(125)}> x 6</DropdownItem>
                       </DropdownMenu>
                   </UncontrolledDropdown>
                   <br />

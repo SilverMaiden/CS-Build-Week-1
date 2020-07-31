@@ -166,7 +166,7 @@ class Grid extends React.Component {
     if(this.props.active) {
       let markedPositions = this.markCellPositionsToChange()
       let newGrid = this.makeCellValueSwaps(markedPositions)
-      this.setState({grid: newGrid}, this.props.updateCurrentGeneration())
+      this.setState({grid: newGrid})
       
 
     } else if(this.props.reset){
@@ -200,9 +200,9 @@ class Grid extends React.Component {
 
   startGridChanges = () => {
     if(this.props.active) {
-      setTimeout(this.makeGridStateChange, 200)
+      setTimeout(this.makeGridStateChange, this.props.speed)
     } else if(this.props.reset) {
-      setTimeout(this.makeGridStateChange, 100)
+      setTimeout(this.makeGridStateChange, this.props.speed)
     }
   }
 
